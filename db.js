@@ -1,10 +1,12 @@
-import pkg from 'pg';
+// db.js
+import pkg from "pg";
+import dotenv from "dotenv";
+
+dotenv.config(); // Load .env variables
+
 const { Pool } = pkg;
 
 export const pool = new Pool({
-  user: 'postgres',          // replace with your PostgreSQL username
-  host: 'localhost',         
-  database: 'world',        // replace with your database name
-  password: 'admin',    // replace with your database password
-  port: 5432
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }, // required for Render.com
 });
