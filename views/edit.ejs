@@ -1,0 +1,45 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg border-0 rounded-4">
+        <!-- Header -->
+        <div class="card-header text-center rounded-top-4 py-4" style="background: linear-gradient(90deg, #1e3c72, #3a66a8);">
+          <h2 class="mb-2 fw-bold text-white" style="font-size: 2rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">Edit Your Blog</h2>
+          <small class="text-white-50">Update your story and share it with the world!</small>
+        </div>
+
+        <!-- Body -->
+        <div class="card-body bg-white p-5 rounded-bottom-4">
+          <form action="/edit/<%= blog.id %>" method="POST">
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Title</label>
+              <input type="text" name="title" class="form-control form-control-lg border-0 shadow-sm rounded-3 px-3 py-2" value="<%= blog.title %>" required>
+            </div>
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Content</label>
+              <textarea name="content" rows="8" class="form-control border-0 shadow-sm rounded-3 px-3 py-2" required><%= blog.content %></textarea>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <a href="/" class="btn btn-outline-secondary btn-lg rounded-3">Cancel</a>
+              <button type="submit" class="btn btn-primary btn-lg fw-bold rounded-3" style="background: linear-gradient(90deg, #1e3c72, #3a66a8); border: none;">Update Blog</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .form-control:focus {
+    box-shadow: 0 0 8px rgba(30, 60, 114, 0.3);
+    border-color: #1e3c72;
+  }
+  .btn-primary:hover {
+    opacity: 0.9;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+  }
+</style>

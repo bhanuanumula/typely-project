@@ -1,0 +1,108 @@
+/* Body & Fonts */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f9f9f9;
+  color: #333;
+}
+
+body {
+  background: linear-gradient(to right, #e0eafc, #cfdef3);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navbar */
+.navbar-subtext {
+  font-size: 0.85rem;
+  margin-left: 10px;
+  color: #6c757d;
+  font-style: italic;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  transition: 0.3s;
+}
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+/* Warning & Danger Buttons */
+.btn-warning {
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+.btn-warning:hover {
+  background-color: #e0a800;
+}
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+.btn-danger:hover {
+  background-color: #b02a37;
+}
+
+/* Blog Cards */
+.blog-card {
+  border-radius: 12px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  background: #fff;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+}
+
+/* Card Titles */
+.card-title {
+  color: #007bff;
+  font-size: 1.1rem;
+}
+
+/* Card Text */
+.card-text {
+  color: #555;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+/* Footer */
+footer {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+/* Dynamic Effects */
+.card-text-truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* For old Safari/Chrome */
+  line-clamp: 3;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
+
+h1, h2 {
+  font-weight: 700;
+}
+
+table {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.btn-danger {
+  transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+  transform: translateY(-2px);
+  opacity: 0.85;
+}
+
+  

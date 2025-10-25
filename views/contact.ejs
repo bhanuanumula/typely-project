@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact - Typely</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background: linear-gradient(to right, #e0eafc, #cfdef3);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      position: relative;
+    }
+
+    .contact-section {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 40px 20px;
+      background-color: #ffffffda;
+      border-radius: 1rem;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-weight: 700;
+      color: #3b1c8c;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .form-control {
+      border-radius: 0.75rem;
+    }
+
+    .btn-submit {
+      background: linear-gradient(to right, #3b1c8c, #6f42c1);
+      color: #fff;
+      border: none;
+      border-radius: 0.75rem;
+      padding: 0.5rem 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      background: linear-gradient(to right, #2c0f77, #5e30a1);
+      transform: scale(1.05);
+    }
+
+    /* Toast styles */
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="contact-section">
+    <h1>Contact</h1>
+
+    <!-- Contact Form -->
+    <form id="contactForm">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" name="name" class="form-control" placeholder="John Doe" required />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" placeholder="john@example.com" required />
+      </div>
+      <div class="mb-3">
+        <label for="message" class="form-label">Message</label>
+        <textarea name="message" class="form-control" rows="5" placeholder="Write your message here..." required></textarea>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-submit">Send Message</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-container">
+    <div id="responseToast" class="toast align-items-center text-white border-0 fade" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body"></div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const form = document.getElementById('contactForm');
+    const toastEl = document.getElementById('responseToast');
+    const toastBody = toastEl.querySelector('.toast-body');
+    const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      try {
+        // Use fetch with correct headers for form submission
+        const response = await fetch('/contact', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: new URLSearchParams(formData)
+        });
+
+        if (!response.ok) throw new Error("Server error: " + response.status);
+
+        const data = await response.json();
+
+        // Remove previous classes
+        toastEl.classList.remove('bg-success', 'bg-danger');
+
+        if (data.success) {
+          toastBody.textContent = data.message || "Message sent successfully!";
+          toastEl.classList.add('bg-success');
+          form.reset();
+        } else {
+          toastBody.textContent = data.error || "Something went wrong!";
+          toastEl.classList.add('bg-danger');
+        }
+
+        toast.show();
+      } catch (err) {
+        // Network or server JSON errors
+        toastEl.classList.remove('bg-success', 'bg-danger');
+        toastBody.textContent = "Network or server error!";
+        toastEl.classList.add('bg-danger');
+        toast.show();
+        console.error(err);
+      }
+    });
+  </script>
+
+</body>
+</html>

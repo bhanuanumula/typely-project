@@ -1,0 +1,107 @@
+<div class="container my-5">
+  <h1 class="mb-5 text-center display-4 fw-bold" style="color: #1e3c72;">All Blogs</h1>
+
+  <% if(blogs.length > 0){ %>
+    <div class="row g-4">
+      <% blogs.forEach(blog => { %>
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 blog-card shadow-sm rounded-4 border-0">
+            <div class="card-body d-flex flex-column">
+              
+              <!-- Blog Title -->
+              <h5 class="card-title fw-bold text-primary"><%= blog.title %></h5>
+              
+              <!-- Author & Date -->
+              <p class="text-muted mb-3" style="font-size: 0.85rem;">
+                By <strong><%= blog.username %></strong> | 
+                <%= new Date(blog.created_at).toLocaleDateString('en-US', { 
+                      weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' 
+                    }) %>
+              </p>
+              
+              <!-- Blog Snippet -->
+              <p class="card-text mb-4 flex-grow-1 text-truncate-snippet">
+                <%= blog.content %>
+              </p>
+              
+              <!-- Buttons -->
+              <div class="mt-auto d-flex flex-wrap gap-2">
+                <a href="/view/<%= blog.id %>" class="btn btn-primary btn-sm fw-semibold" style="background: linear-gradient(90deg, #1e3c72, #3a66a8); border: none;">Read More</a>
+                <% if(user && user.id === blog.user_id){ %>
+                  <a href="/edit/<%= blog.id %>" class="btn btn-warning btn-sm fw-semibold" style="background: linear-gradient(90deg, #f59d00, #ffb347); border: none;">Edit</a>
+                  <form action="/delete/<%= blog.id %>" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm fw-semibold" onclick="return confirm('Are you sure?');">Delete</button>
+                  </form>
+                <% } %>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <p class="text-center fs-5 mt-5 text-secondary">
+      No blogs found. <%= user ? 'Create one now!' : 'Login to create a blog.' %>
+    </p>
+  <% } %>
+</div>
+
+<style>
+/* body {
+  background: #f8f9fa;
+  font-family: 'Montserrat', sans-serif;
+} */
+  body {
+    background: linear-gradient(to right, #e0eafc, #cfdef3);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+  }
+
+/* Card Styling */
+.blog-card {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  border-radius: 16px;
+  background-color: #ffffff;
+}
+
+.blog-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(30, 60, 114, 0.15);
+}
+
+/* Multi-line text clamp */
+.text-truncate-snippet {
+  display: -webkit-box;
+-webkit-line-clamp: 3; /* For old browsers */
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Buttons Styling */
+.btn-primary {
+  transition: all 0.3s ease;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.btn-warning {
+  transition: all 0.3s ease;
+}
+.btn-warning:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.btn-danger {
+  transition: all 0.3s ease;
+}
+.btn-danger:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+</style>

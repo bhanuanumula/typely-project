@@ -1,0 +1,113 @@
+<div class="blog-container my-5">
+  <!-- Blog Title -->
+  <h1 class="blog-title"><%= blog.title %></h1>
+
+  <!-- Meta Info -->
+  <p class="blog-meta">
+    By <strong><%= blog.username %></strong> | 
+    <%= new Date(blog.created_at).toLocaleDateString('en-US', { 
+          weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' 
+        }) %>
+  </p>
+
+  <!-- Image -->
+  <% if(blog.image){ %>
+    <img src="<%= blog.image %>" alt="Blog Image" class="img-fluid rounded-4 mb-4 shadow-sm">
+  <% } %>
+
+  <!-- Blog Content -->
+  <div class="blog-content mb-4">
+    <%= blog.content %>
+  </div>
+
+  <!-- Buttons -->
+  <div class="btn-group mb-4">
+    <% if(user && user.id === blog.user_id){ %>
+      <a href="/edit/<%= blog.id %>" class="btn btn-warning fw-semibold" style="background: linear-gradient(90deg, #f59d00, #ffb347); border: none;">Edit</a>
+      <form action="/delete/<%= blog.id %>" method="POST" style="display:inline;">
+        <button type="submit" class="btn btn-danger fw-semibold" onclick="return confirm('Are you sure?');">Delete</button>
+      </form>
+    <% } %>
+    <a href="/" class="btn btn-primary fw-semibold" style="background: linear-gradient(90deg, #1e3c72, #3a66a8); border: none;">Back</a>
+  </div>
+
+  <!-- Social Share -->
+  <div class="social-share d-flex align-items-center gap-3">
+    <span>Share:</span>
+    <!-- Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=<%= encodeURIComponent(blog.title) %>" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#1e3c72" class="bi bi-twitter" viewBox="0 0 16 16">
+        <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.01-.422A6.685 6.685 0 0 0 16 3.542a6.575 6.575 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.084.797 3.286 3.286 0 0 0-5.596 2.994A9.325 9.325 0 0 1 1.112 2.1a3.286 3.286 0 0 0 1.018 4.381A3.323 3.323 0 0 1 .64 6.575v.041a3.286 3.286 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115c-.212 0-.418-.02-.619-.058a3.286 3.286 0 0 0 3.067 2.279A6.588 6.588 0 0 1 .78 13.58 6.32 6.32 0 0 1 0 13.54a9.29 9.29 0 0 0 5.026 1.472"/>
+      </svg>
+    </a>
+
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=<%= encodeURIComponent('https://yourwebsite.com/view/' + blog.id) %>" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#1e3c72" class="bi bi-linkedin" viewBox="0 0 16 16">
+        <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.24c.837 0 1.356-.554 1.356-1.248-.015-.71-.519-1.248-1.341-1.248-.822 0-1.356.538-1.356 1.248 0 .694.519 1.248 1.326 1.248h.015zm4.908 8.24V9.359c0-.214.015-.428.079-.582.173-.428.567-.872 1.228-.872.867 0 1.215.657 1.215 1.619v4.83h2.401V9.25c0-2.3-1.223-3.367-2.858-3.367-1.33 0-1.91.734-2.241 1.25h.015v-1.074H6.651c.03.694 0 7.225 0 7.225h2.401z"/>
+      </svg>
+    </a>
+
+    <!-- Email -->
+    <a href="mailto:?subject=<%= encodeURIComponent(blog.title) %>&body=<%= encodeURIComponent(blog.content.substring(0,150) + '...') %>">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#1e3c72" class="bi bi-envelope" viewBox="0 0 16 16">
+        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.708 2.825L15 11.383V5.383zm-.034 6.325L8.293 8.01 1.034 11.708A1 1 0 0 0 2 12h12a1 1 0 0 0 .966-.292zM1 11.383l4.708-2.825L1 5.383v6z"/>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<style>
+.blog-container {
+  max-width: 800px;
+  margin: 0 auto 50px auto;
+  background: #ffffff;
+  padding: 40px 30px;
+  border-radius: 1rem;
+  box-shadow: 0 5px 25px rgba(30, 60, 114, 0.1);
+}
+
+.blog-title {
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #1e3c72;
+}
+
+.blog-meta {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 25px;
+}
+
+.blog-content {
+  line-height: 1.7;
+  font-size: 1.1rem;
+}
+
+.img-fluid {
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 15px rgba(30, 60, 114, 0.1);
+}
+
+.social-share svg {
+  transition: transform 0.3s, fill 0.3s;
+}
+
+.social-share a:hover svg {
+  transform: scale(1.2);
+  fill: #3a66a8;
+}
+
+.btn-group a, .btn-group button {
+  margin-right: 5px;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+}
+
+.btn-primary:hover, .btn-warning:hover, .btn-danger:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+</style>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Typely - Inspire. Write. Share.</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* Navbar */
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #3b1c8c !important;
+    }
+
+    .nav-link {
+      color: #6c757d !important;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      color: #3b1c8c !important;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(to right, #e0eafc, #cfdef3);
+      padding: 100px 20px 60px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #3b1c8c;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #6c757d;
+      margin-bottom: 30px;
+    }
+
+    .btn-primary-hero {
+      background: linear-gradient(to right, #3b1c8c, #6f42c1);
+      border: none;
+      padding: 0.6rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .btn-primary-hero:hover {
+      transform: scale(1.05);
+      background: linear-gradient(to right, #2c0f77, #5e30a1);
+    }
+
+    /* Featured Blogs */
+    .featured-blogs {
+      padding: 60px 20px 40px;
+    }
+
+    .featured-card {
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .featured-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+
+    .featured-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .featured-card .card-body h5 {
+      font-weight: 700;
+    }
+
+    .featured-card .card-body p {
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+
+    /* All Blogs Section */
+    .blogs-section {
+      padding: 60px 20px 40px;
+    }
+
+    .blog-card {
+      border-radius: 1rem;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .blog-card .card-body h5 {
+      font-weight: 700;
+    }
+
+    .blog-card .card-body p {
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+
+    .btn-sm-custom {
+      font-size: 0.8rem;
+      padding: 0.3rem 0.6rem;
+    }
+
+    /* Footer */
+    footer {
+      background: #3b1c8c;
+      color: #fff;
+      padding: 30px 20px;
+      text-align: center;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Typely</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/blogs">All Blogs</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+          <% if(!userId){ %>
+            <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="/signup">Signup</a></li>
+          <% } else { %>
+            <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Inspire. Write. Share.</h1>
+    <p>Join Typely to share your thoughts, read amazing blogs, and explore your creativity.</p>
+    <a href="/blogs" class="btn btn-primary-hero">Explore Blogs</a>
+  </section>
+
+  <!-- Featured Blogs -->
+  <section class="featured-blogs container">
+    <h2 class="mb-4 fw-bold">Featured Blogs</h2>
+    <div class="row g-4">
+      <% featuredBlogs.forEach(blog => { %>
+        <div class="col-md-6 col-lg-4">
+          <div class="card featured-card">
+            <% if(blog.image){ %>
+              <img src="<%= blog.image %>" alt="Blog Image">
+            <% } %>
+            <div class="card-body">
+              <h5><%= blog.title %></h5>
+              <p>By <strong><%= blog.username %></strong> | <%= new Date(blog.created_at).toLocaleDateString() %></p>
+              <a href="/view/<%= blog.id %>" class="btn btn-primary btn-sm">Read More</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </section>
+
+  <!-- All Blogs -->
+  <section class="blogs-section container">
+    <h2 class="mb-4 fw-bold">All Blogs</h2>
+    <% if(blogs.length > 0){ %>
+      <div class="row g-4">
+        <% blogs.forEach(blog => { %>
+          <div class="col-md-6 col-lg-4">
+            <div class="card blog-card h-100">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title"><%= blog.title %></h5>
+                <p class="card-text mb-3">By <strong><%= blog.username %></strong> | <%= new Date(blog.created_at).toLocaleDateString() %></p>
+                <p class="card-text text-truncate" style="flex-grow:1;"><%= blog.content.length > 120 ? blog.content.substring(0,120)+'...' : blog.content %></p>
+                <div class="mt-auto d-flex flex-wrap gap-2">
+                  <a href="/view/<%= blog.id %>" class="btn btn-primary btn-sm btn-sm-custom">Read More</a>
+                  <% if(userId && userId === blog.user_id){ %>
+                    <a href="/edit/<%= blog.id %>" class="btn btn-warning btn-sm btn-sm-custom">Edit</a>
+                    <a href="/delete/<%= blog.id %>" class="btn btn-danger btn-sm btn-sm-custom" onclick="return confirm('Are you sure?');">Delete</a>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p class="text-center fs-5 mt-3">No blogs found. <%= userId ? 'Create one now!' : 'Login to create a blog.' %></p>
+    <% } %>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; <%= new Date().getFullYear() %> Typely. All rights reserved.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

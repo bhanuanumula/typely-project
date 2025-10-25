@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Manage Users | Typely Admin</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+/* ---------------- Body ---------------- */
+body { 
+    background: linear-gradient(to right, #e0eafc, #cfdef3); 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    min-height: 100vh; 
+    margin: 0;
+}
+
+/* ---------------- Header ---------------- */
+.admin-header { 
+    background: linear-gradient(90deg, #1e3c72, #2a5298); 
+    color: white; 
+    padding: 18px 30px; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    border-radius: 0 0 12px 12px;
+}
+.admin-header h2 { 
+    font-weight: 700; 
+    margin: 0; 
+    font-size: 1.6rem;
+}
+.logout-btn, .back-btn {
+    background-color: #fff; 
+    color: #1e3c72; 
+    font-weight: 600; 
+    border-radius: 6px; 
+    padding: 6px 14px; 
+    text-decoration: none; 
+    transition: 0.3s; 
+    margin-right: 10px;
+}
+.logout-btn:hover, .back-btn:hover { 
+    background-color: #f8f9fa; 
+    transform: scale(1.03); 
+}
+
+/* ---------------- Card & Table ---------------- */
+.card { 
+    border: none; 
+    border-radius: 12px; 
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08); 
+    margin-top:20px; 
+}
+h4 { 
+    color: #1e3c72; 
+    font-weight: 700; 
+    margin-bottom: 15px; 
+}
+table th { 
+    background-color: #1e3c72; 
+    color: white; 
+}
+.btn { 
+    border-radius: 6px; 
+    font-weight: 500; 
+    margin-right: 5px;
+}
+.btn-warning { 
+    background-color: #ffc107; 
+    border: none; 
+    color: #000; 
+}
+.btn-warning:hover { 
+    background-color: #e0a800; 
+}
+.btn-info { 
+    background-color: #17a2b8; 
+    border: none; 
+    color: #fff;
+}
+.btn-info:hover { 
+    background-color: #138496; 
+}
+.btn-secondary { 
+    background-color: #6c757d; 
+    border: none; 
+    color: #fff; 
+}
+.btn-secondary:hover { 
+    background-color: #5a6268; 
+}
+.btn-danger:hover { 
+    background-color: #c82333; 
+}
+</style>
+</head>
+<body>
+
+<div class="admin-header d-flex justify-content-between align-items-center">
+  <div>
+    <a href="/admin" class="back-btn">← Back</a>
+    <h2 class="d-inline">Manage Users</h2>
+  </div>
+  <a href="/admin/logout" class="logout-btn">Logout</a>
+</div>
+
+<div class="container">
+  <div class="card p-4">
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr>
+          <th>ID</th><th>Username</th><th>Email</th><th>Role</th><th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach(u => { %>
+        <tr>
+          <td><%= u.id %></td>
+          <td><%= u.username %></td>
+          <td><%= u.email %></td>
+          <td><%= u.role %></td>
+          <td>
+            <% if(u.role!=='admin'){ %>
+              <form action="/admin/users/delete/<%= u.id %>" method="POST" class="d-inline">
+                <button class="btn btn-danger btn-sm">Delete</button>
+              </form>
+              <form action="/admin/users/promote/<%= u.id %>" method="POST" class="d-inline">
+                <button class="btn btn-warning btn-sm">Promote</button>
+              </form>
+              <form action="/admin/users/reset-password/<%= u.id %>" method="POST" class="d-inline">
+                <button class="btn btn-info btn-sm">Reset PW</button>
+              </form>
+            <% } else { %>
+              <form action="/admin/users/demote/<%= u.id %>" method="POST" class="d-inline">
+                <button class="btn btn-secondary btn-sm">Demote</button>
+              </form>
+            <% } %>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

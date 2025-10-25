@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="login-container p-4 rounded shadow bg-white" style="width: 100%; max-width: 400px;">
+    <h1 class="text-center mb-4">Login</h1>
+    <form action="/login" method="POST">
+      <div class="mb-3">
+        <label>Email</label>
+        <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+      </div>
+      <div class="mb-3">
+        <label>Password</label>
+        <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+      </div>
+
+      <p class="mt-2 text-center">
+        <a href="/forgot-password" class="login-link">Forgot Password?</a>
+        <span class="mx-2">|</span>
+        <a href="/admin" class="login-link admin-link">Are You Admin?</a>
+      </p>
+
+      <button class="btn btn-primary w-100">Login</button>
+      <p class="mt-3 text-center">Don't have an account? <a href="/signup">Signup here</a></p>
+    </form>
+  </div>
+</div>
+
+<style>
+  body {
+    background: linear-gradient(to right, #e0eafc, #cfdef3);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .login-container h1 {
+    font-weight: 700;
+    color: #333;
+  }
+
+  .form-control {
+    border-radius: 8px;
+    padding: 12px;
+  }
+
+  .btn-primary {
+    border-radius: 8px;
+    padding: 12px;
+    font-weight: 600;
+    background-color: #2575fc;
+    border: none;
+    transition: 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #6a11cb;
+  }
+
+  /* 🔹 Anchor styling for “Forgot Password?” and “Are You Admin?” */
+  .login-link {
+    color: #2575fc;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+  }
+
+  .login-link:hover {
+    color: #6a11cb;
+    text-decoration: underline;
+  }
+
+  .admin-link {
+    font-weight: 600;
+    color: #0056b3;
+  }
+
+  .admin-link:hover {
+    color: #6a11cb;
+  }
+</style>
