@@ -9,3 +9,7 @@ Thumbs.db
 
 # Build/Zip
 *.zip
+
+# Ignore SSH keys
+qwertqwe.txt
+qwertqwe.txt.pub
